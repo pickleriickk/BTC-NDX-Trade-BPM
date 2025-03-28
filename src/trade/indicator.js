@@ -14,7 +14,6 @@ const getActionSignal = () => {
   // Use a dead zone to allow more signal changes
   const btcSignal = btcScore >= 0 ? 'BUY' : 'SELL';
   const ndxSignal = ndxScore >= 0 ? 'BUY' : 'SELL';
-  console.log('btcScore: ', btcScore, 'ndxScore: ', ndxScore);
   return { btcSignal, ndxSignal };
 };
 
