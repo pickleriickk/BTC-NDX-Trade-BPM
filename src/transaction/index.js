@@ -23,31 +23,9 @@ const fetchBalance = async (req, res) => {
   res.respond(req, { balance, unrealizedBalance });
 };
 
-const fetchPosition = async (req, res) => {
-  try {
-    const position = await db.findOne(db.positions, {
-      email: req.body.email,
-      status: 'open',
-    });
-    res.respond(req, {
-      btcAmount: position && position.type === 'BTC' ? position.amount : 0,
-      ndxAmount: position && position.type === 'NDX' ? position.amount : 0,
-    });
-  } catch (err) {
-    res.error(500, err, req);
-  }
-};
-
 const fetchAdvice = async (req, res) => {
   try {
     const advice = getActionSignal();
-    /*
-    if (
-      (advice === 'SELL' && !position) ||
-      (advice === 'BUY' && !user.balance)
-    ) {
-      advice = 'HOLD';
-    }*/
     res.respond(req, {
       btcSignal: advice.btcSignal,
       ndxSignal: advice.ndxSignal,
@@ -174,7 +152,6 @@ const fetchUserInfo = async (req, res) => {
 module.exports = {
   fetchBalance,
   fetchAdvice,
-  fetchPosition,
   buy,
   sell,
   fetchUserInfo,

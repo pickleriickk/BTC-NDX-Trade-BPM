@@ -199,10 +199,6 @@ const handleEvent = (body) => {
   }
 };
 
-const getEvents = async (req, res) => {
-  res.json(constants.EVENTS);
-};
-
 const getNewEvents = async (req, res) => {
   const lastFetchTime = req.query.lastFetchTime;
   const latestEvents = {};
@@ -228,6 +224,5 @@ const getNewEvents = async (req, res) => {
 module.exports = {
   handleEvent,
   init,
-  getEvents,
   getNewEvents,
 };

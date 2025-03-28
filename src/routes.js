@@ -9,11 +9,10 @@ const {
   fetchAdvice,
   buy,
   sell,
-  fetchPosition,
   fetchUserInfo,
 } = require('./transaction');
 const { fetchLatestPrice } = require('./trade');
-const { handleEvent, getEvents, getNewEvents } = require('./events');
+const { handleEvent, getNewEvents } = require('./events');
 router.post('/', (req, res) => {
   handleEvent(req.body);
 });
@@ -25,11 +24,9 @@ router.get('/balance', validate, auth, fetchBalance);
 router.get('/advice', validate, auth, fetchAdvice);
 router.post('/buy', validate, auth, buy);
 router.post('/sell', validate, auth, sell);
-router.get('/position', validate, auth, fetchPosition);
 router.get('/price', validate, auth, fetchLatestPrice);
 
 router.use('/dashboard', express.static('client/build'));
-router.get('/dashboard/data', getEvents);
 router.get('/dashboard/data/poll', getNewEvents);
 
 module.exports = router;
