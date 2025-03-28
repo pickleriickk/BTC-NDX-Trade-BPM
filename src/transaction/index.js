@@ -45,7 +45,10 @@ const buy = async (req, res) => {
     const ndxPrice = constants.HISTORICAL_DATA.nasdaq.slice(-1)[0].price;
 
     if (!user.balance) {
-      return res.error(400, null, req, 'Insufficient balance');
+      return res.respond(req, {
+        success: false,
+        reason: 'Insufficient balance',
+      });
     }
     let amount;
     if (type === 'BTC') {
@@ -88,7 +91,10 @@ const sell = async (req, res) => {
       status: 'open',
     });
     if (!position) {
-      return res.error(400, null, req, 'No active position');
+      return res.respond(req, {
+        success: false,
+        reason: 'No active position',
+      });
     }
     const btcPrice = constants.HISTORICAL_DATA.bitcoin.slice(-1)[0].price;
     const ndxPrice = constants.HISTORICAL_DATA.nasdaq.slice(-1)[0].price;
