@@ -72,7 +72,7 @@ const handleEvent = (body) => {
   body = Object.assign({}, body);
   storeEvent(rawEvents, body);
   if (body.topic !== 'stream' || body.event !== 'extraction') {
-    return console.log('not a stream event');
+    return; //Not a stream event
   }
   try {
     body.notification = JSON.parse(body.notification);
@@ -82,7 +82,7 @@ const handleEvent = (body) => {
   if (
     body.notification.content.attributes.model_uuid !== constants.MODEL_UUID
   ) {
-    return console.log('not the right model uuid');
+    return; //Not the right model uuid
   }
   const instanceId = body.notification.instance;
   for (let stream of body.notification.datastream || []) {
@@ -205,7 +205,6 @@ const getEvents = async (req, res) => {
 
 const getNewEvents = async (req, res) => {
   const lastFetchTime = req.query.lastFetchTime;
-  console.log('lastFetchTime', lastFetchTime);
   const latestEvents = {};
   let latestEventTime = lastFetchTime;
   for (const instanceId in constants.EVENTS) {

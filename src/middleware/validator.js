@@ -12,7 +12,6 @@ const modelRoute = {
 };
 module.exports.validate = (req, res, next) => {
   req.body = req.method === 'GET' ? req.query : req.body;
-  //console.log('Request:', JSON.stringify(req.body));
   const { error } = modelRoute[req.path].validate(req.body);
 
   if (error) {

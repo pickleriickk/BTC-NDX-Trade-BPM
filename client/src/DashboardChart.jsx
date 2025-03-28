@@ -443,8 +443,6 @@ export default function DashboardCharts() {
             !newState[instanceKey][field].some((p) => p.time === newItem.time)
           ) {
             newState[instanceKey][field].push(newItem);
-          } else {
-            console.log('already exists', newItem);
           }
         }
       }
@@ -486,7 +484,13 @@ export default function DashboardCharts() {
 
   const getAllTimes = () => {
     if (!userData) return [];
-    const instanceKey = selectedInstance || Object.keys(userData)[0];
+    let instanceKey = selectedInstance || Object.keys(userData)[0];
+    if (!userData[instanceKey]) {
+      instanceKey = Object.keys(userData)[0];
+      setSelectedInstance(instanceKey);
+      localStorage.setItem('selectedInstance', instanceKey);
+      window.location.reload();
+    }
     const userObj = userData[instanceKey];
     if (!userObj) return [];
     const times = Object.values(userObj)
@@ -692,10 +696,6 @@ export default function DashboardCharts() {
 
   useEffect(() => {
     navigateToLatestData();
-    console.log(
-      new Date().getTime(),
-      JSON.stringify(userData?.['52664']?.btcPrice || []),
-    );
   }, [userData]);
 
   const navigateToLatestData = () => {

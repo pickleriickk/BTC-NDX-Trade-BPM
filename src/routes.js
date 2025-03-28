@@ -16,11 +16,6 @@ const { fetchLatestPrice } = require('./trade');
 const { handleEvent, getEvents, getNewEvents } = require('./events');
 router.post('/', (req, res) => {
   handleEvent(req.body);
-
-  return;
-  res.set('content-type', 'application/json');
-  res.set('CPEE-CALLBACK', 'true');
-  res.send({ verygood: 'lying', test: req.query.a });
 });
 
 router.post('/login', validate, login);

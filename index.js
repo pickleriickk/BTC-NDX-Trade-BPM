@@ -1,4 +1,5 @@
 require('dotenv').config();
+const { constants } = require('./src/constants');
 const express = require('express');
 const morgan = require('morgan');
 const multer = require('multer');
@@ -17,6 +18,12 @@ process.removeAllListeners('warning');
 app.use('/', routes);
 
 const init = async () => {
+  if (!constants.COIN_MARKET_CAP_API_KEY) {
+    console.error(
+      'COIN_MARKET_CAP_API_KEY is not set, did you forget to put the .env file?',
+    );
+    process.exit(1);
+  }
   await Promise.all([Trade.init(), Event.init()]);
   app.listen(port);
   console.log('App listening on port:', port);
