@@ -121,5 +121,7 @@ npm start
 - Also iterate through previous/next time intervals, using the arrow buttons on each side of the screen.
 - In each chart you can toggle on/off a component. For example you can only select NDX price or BTC Price etc.
 
-- Below is an example visualization chart:
-  ![Example Chart](fig/example_chart.png)
+- Below are examples of visualization charts:
+  ![Price Chart](fig/priceChart.png)
+  ![Balance Chart](fig/balanceChart.png)
+  ![Amount Chart](fig/amountChart.png)

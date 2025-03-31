@@ -1,23 +1,19 @@
 const { constants } = require('../constants');
 
-// Main function: returns signals for BTC & Nasdaq
 const getActionSignal = () => {
   const { bitcoin, nasdaq } = constants.HISTORICAL_DATA;
 
   const bitcoinIndicators = calculateIndicators(bitcoin);
   const nasdaqIndicators = calculateIndicators(nasdaq);
 
-  // Evaluate each market separately
   const btcScore = evaluateIndicators(bitcoin, bitcoinIndicators);
   const ndxScore = evaluateIndicators(nasdaq, nasdaqIndicators);
 
-  // Use a dead zone to allow more signal changes
   const btcSignal = btcScore >= 0 ? 'BUY' : 'SELL';
   const ndxSignal = ndxScore >= 0 ? 'BUY' : 'SELL';
   return { btcSignal, ndxSignal };
 };
 
-// Make periods even shorter and thresholds looser:
 const calculateIndicators = (data) => ({
   bollingerBands: calculateBollingerBands(data, 7, 1.5),
   ema: calculateEMA(data, 5),
@@ -25,7 +21,6 @@ const calculateIndicators = (data) => ({
   macd: calculateMACD(data, 5, 10, 3),
 });
 
-// Evaluate how bullish/bearish the indicators appear
 const evaluateIndicators = (data, indicators) => {
   let score = 0;
   const lastPrice = data[data.length - 1].price;
@@ -51,7 +46,6 @@ const evaluateIndicators = (data, indicators) => {
   return score;
 };
 
-// Bollinger Bands calculation
 const calculateBollingerBands = (data, period = 20, stdDevMultiplier = 2) => {
   const prices = data.map((d) => d.price);
   const recentPrices = prices.slice(-period);
@@ -73,7 +67,6 @@ const calculateBollingerBands = (data, period = 20, stdDevMultiplier = 2) => {
   };
 };
 
-// EMA calculation
 const calculateEMA = (data, period = 12) => {
   const prices = data.map((d) => d.price);
   const k = 2 / (period + 1);
@@ -85,7 +78,6 @@ const calculateEMA = (data, period = 12) => {
   return ema;
 };
 
-// RSI calculation
 const calculateRSI = (data, period = 14) => {
   const prices = data.map((d) => d.price);
   let gains = 0;
@@ -104,7 +96,6 @@ const calculateRSI = (data, period = 14) => {
   return 100 - 100 / (1 + rs);
 };
 
-// MACD calculation
 const calculateMACD = (
   data,
   shortPeriod = 12,
