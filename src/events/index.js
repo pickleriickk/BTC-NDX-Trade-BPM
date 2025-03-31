@@ -1,5 +1,5 @@
 const { constants } = require('../constants');
-const { events, rawEvents, insert, getAll } = require('../db');
+const { events, insert, getAll } = require('../db');
 
 const storeEvent = async (db, data) => {
   try {
@@ -70,7 +70,6 @@ const init = async () => {
 };
 const handleEvent = (body) => {
   body = Object.assign({}, body);
-  storeEvent(rawEvents, body);
   if (body.topic !== 'stream' || body.event !== 'extraction') {
     return; //Not a stream event
   }

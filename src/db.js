@@ -16,11 +16,6 @@ const events = new Datastore({
   autoload: true,
 });
 
-const rawEvents = new Datastore({
-  filename: path.join(__dirname, '..', 'data', 'rawEvents.db'),
-  autoload: true,
-});
-
 const getAll = (collection) => {
   return new Promise((resolve, reject) => {
     collection.find({}, (err, docs) => {
@@ -61,7 +56,6 @@ module.exports = {
   users,
   positions,
   events,
-  rawEvents,
   findOne,
   update,
   insert,
